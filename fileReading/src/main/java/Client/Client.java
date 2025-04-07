@@ -1,3 +1,5 @@
+package Client;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -5,13 +7,15 @@ import java.util.concurrent.*;
 
 public class Client {
     public static void main(String[] args) {
-        String[] servers = { "localhost:5001", "localhost:5002" };
+        String[] servers = { "localhost:5000", "localhost:5001" };
         Map<String, Integer> wordCount = new ConcurrentHashMap<>();
 
         ExecutorService executor = Executors.newFixedThreadPool(2);
 
         for (String server : servers) {
-            executor.execute(() -> connectToServer(server, wordCount));
+            executor.execute(() -> {
+                connectToServer(server, wordCount);
+            });
         }
 
         executor.shutdown();
@@ -29,14 +33,16 @@ public class Client {
         String host = parts[0];
         int port = Integer.parseInt(parts[1]);
 
-        try (Socket socket = new Socket(host, port);
-             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+        try {
+            Socket socket = new Socket(host, port);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             String line;
             while ((line = reader.readLine()) != null) {
                 processLine(line, wordCount);
             }
         } catch (IOException e) {
+            System.out.println("There is issue while connecting with port");
             e.printStackTrace();
         }
     }

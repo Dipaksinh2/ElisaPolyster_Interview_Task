@@ -1,13 +1,15 @@
+package Server;
+
 import java.io.*;
 import java.net.*;
 
-public class FrankServer {
-    public static void main(String[] args) throws URISyntaxException {
-        int port = 5001;
-        String fileName = "frankenstein.txt";
+public class DraculaServer {
+    public static void main(String[] args) {
+        int port = 5002;
+        String fileName = "dracula.txt";
 
         try (ServerSocket serverSocket = new ServerSocket(port)) {
-            System.out.println("Frankenstein Server running on port: " + port);
+            System.out.println("Dracula Server running on port: " + port);
 
             while (true) {
                 Socket clientSocket = serverSocket.accept();
