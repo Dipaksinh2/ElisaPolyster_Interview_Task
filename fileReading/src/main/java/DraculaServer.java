@@ -18,9 +18,10 @@ public class DraculaServer {
         }
     }
 
+    // This method is created to handle request from client
     private static void handleClient(Socket clientSocket, String fileName) {
         try (BufferedReader fileReader = new BufferedReader(new FileReader(fileName));
-             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)) {
+                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)) {
 
             String line;
             while ((line = fileReader.readLine()) != null) {
